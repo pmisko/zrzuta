@@ -1,9 +1,6 @@
 package pl.sda.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -21,23 +18,29 @@ public class WhipRound {
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal amount;
+    @ManyToOne(targetEntity = User.class)
+    private User user;
 
-    public WhipRound() {
-    }
-
-    public WhipRound(Long id, String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal amount) {
-        this.id = id;
+    public WhipRound(Long id, String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal amount, User user) {
+        this.id= id;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+        this.user = user;
+    }
+
+    public WhipRound() {
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -79,6 +82,33 @@ public class WhipRound {
         this.amount = amount;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WhipRound)) return false;
+        WhipRound whipRound = (WhipRound) o;
+        return Objects.equals(id, whipRound.id) &&
+                Objects.equals(title, whipRound.title) &&
+                Objects.equals(description, whipRound.description) &&
+                Objects.equals(startDate, whipRound.startDate) &&
+                Objects.equals(endDate, whipRound.endDate) &&
+                Objects.equals(amount, whipRound.amount) &&
+                Objects.equals(user, whipRound.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, startDate, endDate, amount, user);
+    }
+
     @Override
     public String toString() {
         return "WhipRound{" +
@@ -88,24 +118,7 @@ public class WhipRound {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", amount=" + amount +
+                ", user=" + user +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WhipRound whipRound = (WhipRound) o;
-        return Objects.equals(id, whipRound.id) &&
-                Objects.equals(title, whipRound.title) &&
-                Objects.equals(description, whipRound.description) &&
-                Objects.equals(startDate, whipRound.startDate) &&
-                Objects.equals(endDate, whipRound.endDate) &&
-                Objects.equals(amount, whipRound.amount);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, description, startDate, endDate, amount);
     }
 }
