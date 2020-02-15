@@ -29,6 +29,13 @@ public class Donation {
     public Donation() {
     }
 
+    public Donation(BigDecimal amount, LocalDate donationDate, WhipRound whipRound, User user) {
+        this.amount = amount;
+        this.donationDate = donationDate;
+        this.whipRound = whipRound;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
